@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.content_app {
+  padding: 25px 0px;
+}
+
+.form-control:focus::placeholder {
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.main-table {
+  border: 1px solid #ddd;
+}
+
+.main-table thead tr th,
+.main-table tbody tr td {
+  text-align: center;
+}
+.main-table thead tr th {
+  font-size: 15px;
+  color: #666;
+  background-color: #fbfbfb;
+}
+.main-table tbody tr td {
+  font-size: 15px;
+  color: #333;
+  vertical-align: middle;
+
+}

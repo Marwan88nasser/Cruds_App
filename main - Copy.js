@@ -1,5 +1,4 @@
-// Collect Used Variables
-
+// Cached App Element
 // Inputs
 let titleInp = document.querySelector("#title_product");
 let priceInp = document.querySelector("#price_product");
@@ -18,7 +17,7 @@ let deleteAllBtn = document.querySelector("#btn_delete_all");
 
 // Total Price Of product
 let totalPrice = document.querySelector("#total_price");
-// Total Number Of product
+// Total Price Of product
 let productNum = document.querySelector("#product_number");
 
 // Set Toast To The App
@@ -34,13 +33,15 @@ const Toast = Swal.mixin({
   },
 });
 
+// Get Total Price
 let finalPrice = () => {
-  if (priceInp.value != "") {
-    let priceVal = Number(priceInp.value) || 0;
-    let taxesVal = Number(taxesInp.value) || 0;
-    let adsVal = Number(adsInp.value) || 0;
-    let discountVal = Number(discountInp.value) || 0;
-    let calcPrice = priceVal + taxesVal + adsVal - discountVal;
+  if (!priceInp.value == "") {
+    let Price = Number(priceInp.value) || 0;
+    let tax = Number(taxesInp.value) || 0;
+    let ads = Number(adsInp.value) || 0;
+    let discount = Number(discountInp.value) || 0;
+
+    let calcPrice = Price + tax + ads - discount;
     totalPrice.textContent = calcPrice;
   } else {
     totalPrice.textContent = "";
@@ -51,39 +52,41 @@ let finalPrice = () => {
   }
 };
 
-let productArr;
+// Create product
+// Create Array To Stor The Data
+let dataProduct;
 if (localStorage.product) {
-  productArr = JSON.parse(localStorage.product);
+  dataProduct = JSON.parse(localStorage.product);
 } else {
-  productArr = [];
+  dataProduct = [];
 }
 
 let createProduct = () => {
-  // Create Object Of Product
-  let productObj = {
+  // Create Object To Stor The Signal Product Data
+  let dataProductObj = {
     title: titleInp.value,
     price: priceInp.value,
-    taxes: taxesInp.value,
+    tax: taxesInp.value,
     ads: adsInp.value,
     discount: discountInp.value,
     count: countInp.value,
     category: categoryInp.value,
+    total: totalPrice.textContent,
   };
-
-  if(productObj.count > 1) {
-    for(let i = 0; i < productObj.count; i++) {
-      // Rebate Product And Add To The Array
-      productArr.push(productObj);
+  // Add Product Data Object To The Array
+  if (dataProductObj.count > 1) {
+    for (let i = 0; i < dataProductObj.count; i++) {
+      dataProduct.push(dataProductObj);
     }
   } else {
-    // Add Product To The Array
-    productArr.push(productObj);
+    dataProduct.push(dataProductObj);
   }
 
-  // Add Product To The LocalStorage
-  localStorage.setItem("product", JSON.stringify(productArr));
+  // Set Product Data Array To The LocalStorage
+  localStorage.setItem("product", JSON.stringify(dataProduct));
 };
 
+// Clear Inputs
 let clearInputs = () => {
   titleInp.value = "";
   priceInp.value = "";
@@ -95,73 +98,66 @@ let clearInputs = () => {
   totalPrice.textContent = "";
 };
 
+// Read Product
 let viewProduct = () => {
-  // Set Products To The Table
   let tbody = "";
-  if (productArr.length > 0) {
-    productArr.forEach((ele, index) => {
+
+  if (dataProduct.length > 0) {
+    dataProduct.forEach((item, index) => {
       tbody += `
         <tr>
           <td>${(index += 1)}</td>
-          <td>${ele.title}</td>
-          <td>${ele.price}</td>
-          <td>${ele.taxes}</td>
-          <td>${ele.ads}</td>
-          <td>${ele.discount}</td>
-          <td>${ele.count}</td>
-          <td>${ele.category}</td>
-          <td>
-            <button class="btn btn-sm btn-info">Update</button>
-          </td>
-          <td>
-            <button class="btn btn-sm btn-danger" onclick='deletePro(${index})'>Delete</button>
-          </td>
+          <td>${item.title}</td>
+          <td>${item.price}</td>
+          <td>${item.tax}</td>
+          <td>${item.ads}</td>
+          <td>${item.discount}</td>
+          <td>${item.total}</td>
+          <td>${item.category}</td>
+          <td><button class="btn btn-sm px-4 btn-info">Update</button></td>
+          <td><button class="btn btn-sm px-4 btn-danger" onclick="deleteProduct(${index})">Delete</button></td>
         </tr>
-        `;
+      `;
     });
-    productNum.textContent = productArr.length;
     deleteAllBtn.style.display = "block";
-    
+    productNum.textContent = dataProduct.length;
   } else {
     tbody = `
-    <tr>
-      <td colspan="12">There's No Product</td>
-    </tr>
-    `;
+        <tr>
+          <td colspan="12">There's No Product</td>
+        </tr>
+      `;
     deleteAllBtn.style.display = "none";
   }
+
   document.querySelector("#product-tbody").innerHTML = tbody;
 };
-
-// Run view Product Function
+// Run Function
 viewProduct();
 
 // Delete Product
-let deletePro = (i) => {
-  // Delete The Product From The Array
-  productArr.splice(--i, 1);
-  // Update The localStorage Products
-  localStorage.product = JSON.stringify(productArr);
-  // Run view Product Function
+let deleteProduct = (i) => {
+  dataProduct.splice(--i, 1);
+  localStorage.product = JSON.stringify(dataProduct);
   viewProduct();
 };
 
-// Delete All Products
+// Delete All Product
 let deleteAllPro = () => {
-  // Delete The All Product From The Array
-  productArr.splice(0);
-  // Delete The localStorage Products Kye
+  dataProduct.splice(0);
   localStorage.removeItem("product");
-  // Run view Product Function
   viewProduct();
+
+  Toast.fire({
+    icon: "success",
+    title: "Deleted All Product Successfully",
+  });
 };
 
-// Run Create Product Function
+// Run Function
+// Generate Product
 createBtn.addEventListener("click", () => {
-  // Run Create Product Function
   createProduct();
-  // Run Clear Inputs Function
   clearInputs();
-  // Run view Product Function
   viewProduct();
 });

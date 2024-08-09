@@ -69,17 +69,17 @@
                 </div>
                 <div class="col-12">
                     <div class="inp-holder">
-                        <input type="text" class="form-control" id="search_product" placeholder="Search...">
+                        <input type="text" class="form-control" id="search_product" placeholder="Search..." onkeyup="searchProduct(this.value)">
                     </div>
                 </div>
                 <div class="col-12 col-md-5">
                     <div class="btn-holder">
-                        <button class="btn btn-sm btn-outline-secondary fs-6 py-2 w-100" id="btn_search_title">Search By Title</button>
+                        <button class="btn btn-sm btn-outline-secondary fs-6 py-2 w-100" id="search_title" onclick="searchBy(this.id)">Search By Title</button>
                     </div>
                 </div>
                 <div class="col-12 col-md-5 ms-auto ">
                     <div class="btn-holder">
-                        <button class="btn btn-sm btn-outline-secondary fs-6 py-2 w-100" id="btn_search_category">Search By Category</button>
+                        <button class="btn btn-sm btn-outline-secondary fs-6 py-2 w-100" id="search_category" onclick="searchBy(this.id)">Search By Category</button>
                     </div>
                 </div>
                 <div class="col-12">

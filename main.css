@@ -50,11 +50,6 @@ body {
   padding: 25px 0px;
 }
 
-.form-control:focus::placeholder {
-  opacity: 0;
-  transition: 0.3s;
-}
-
 .main-table {
   border: 1px solid #ddd;
 }

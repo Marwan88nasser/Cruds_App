@@ -125,7 +125,6 @@ let viewProduct = () => {
           <td>${ele.ads}</td>
           <td>${ele.discount}</td>
           <td>${ele.total}</td>
-          <td>${ele.count}</td>
           <td>${ele.category}</td>
           <td>
             <button class="btn btn-sm btn-info" onclick="updateProduct(${index})">Update</button>
@@ -192,8 +191,7 @@ let updateProduct = (i) => {
   taxesInp.value = updatingEle.taxes;
   adsInp.value = updatingEle.ads;
   discountInp.value = updatingEle.discount;
-  total: totalPrice.textContent, finalPrice();
-  countInp.value = updatingEle.count;
+  totalPrice.textContent = updatingEle.total;
   countInp.closest(".col-12").style.display = "none";
   categoryInp.value = updatingEle.category;
 
